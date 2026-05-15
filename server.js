@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 // Updated CORS for Production (Vercel)
 app.use(cors({
   origin: [
-    'https://star-aviation-frontend.vercel.app' // <--- APNA VERCEL LINK YAHAN DALAIN
+    'https://star-aviation-frontend.vercel.app', // <--- APNA VERCEL LINK YAHAN DALAIN
     'http://localhost:3000'
   ],
   credentials: true,
