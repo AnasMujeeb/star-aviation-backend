@@ -18,7 +18,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── Middleware ──────────────────────────────────────────────
-app.use(cors());
+// Updated CORS for Production (Vercel)
+app.use(cors({
+  origin: [
+    'https://star-aviation-frontend.vercel.app' // <--- APNA VERCEL LINK YAHAN DALAIN
+    'http://localhost:3000'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
@@ -71,8 +81,8 @@ const startServer = async () => {
     // Start Express
     app.listen(PORT, () => {
       console.log(`\n Star Air Aviation Inventory API`);
-      console.log(`   Server running on http://localhost:${PORT}`);
-      console.log(`   Health check:  http://localhost:${PORT}/api/health`);
+      console.log(`   Server running on port ${PORT}`);
+      console.log(`   Health check: /api/health`);
       console.log(`   Environment:   ${process.env.NODE_ENV || 'development'}\n`);
     });
 
