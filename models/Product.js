@@ -69,6 +69,11 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Expiry date is required'],
       index: true,
     },
+    // models/Product.js ke schema ke andar yeh add karein:
+tsoDate: {
+type: Date,
+required: false // Chunke har product ka overhaul nahi hota, isay optional rakhein
+},
     manufacturingDate: {
       type: Date,
     },
