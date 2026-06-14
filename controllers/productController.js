@@ -6,10 +6,52 @@ const { createAuditLog } = require('../middleware/auditMiddleware');
 
 /**
  * POST /api/products
- * Create a new product with auto-generated barcode.
+ * Create a new product with auto-generated barcode and TSO Date.
  */
+// const createProduct = async (req, res, next) => {
+//   try {
+//     // Validate request
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Validation failed',
+//         errors: errors.array(),
+//       });
+//     }
+
+//     // Generate unique barcode if not provided
+//     const barcode = req.body.barcode || (await generateUniqueBarcode());
+
+//     const productData = {
+//       ...req.body,
+//       barcode,
+//     };
+
+//     const product = await Product.create(productData);
+
+//     // Audit log
+//     await createAuditLog({
+//       action: 'CREATE',
+//       entity: 'Product',
+//       entityId: product._id,
+//       user: req.user,
+//       details: `Created product "${product.name}" with barcode ${product.barcode}`,
+//     });
+
+//     res.status(201).json({
+//       success: true,
+//       data: product,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 const createProduct = async (req, res, next) => {
   try {
+    // 💡 BUS YEH EK LINE ADD KARNI HAI, BAQI KUCH NAHI HATANA:
+    console.log("=== BACKEND PAR AAYA HUA REQ.BODY ===", req.body);
+
     // Validate request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -51,10 +93,6 @@ const createProduct = async (req, res, next) => {
 /**
  * GET /api/products
  * Get all products with pagination, search, and filtering.
- *
- * Query params:
- *   page (default 1), limit (default 20), search, category,
- *   condition, lifecycleStatus, sortBy, sortOrder
  */
 const getProducts = async (req, res, next) => {
   try {
@@ -184,7 +222,7 @@ const getProductById = async (req, res, next) => {
 
 /**
  * PUT /api/products/:id
- * Update a product. Tracks changes in audit log.
+ * Update a product. Tracks changes in audit log (including TSO Date).
  */
 const updateProduct = async (req, res, next) => {
   try {
@@ -300,7 +338,6 @@ const deleteProduct = async (req, res, next) => {
 /**
  * PATCH /api/products/:id/stock
  * Adjust stock quantity (stock in or stock out).
- * Body: { adjustment: +5 or -3 }
  */
 const adjustStock = async (req, res, next) => {
   try {
