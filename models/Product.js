@@ -10,25 +10,27 @@ const productSchema = new mongoose.Schema(
     },
     barcode: {
       type: String,
-      required: [true, 'Barcode is required'],
       unique: true,
       uppercase: true,
+      sparse: true,
       trim: true,
       index: true,
     },
     partNumber: {
       type: String,
       trim: true,
+       required: false,
       default: '',
     },
     serialNumber: {
       type: String,
       trim: true,
+       required: false,
       default: '',
     },
     category: {
       type: String,
-      required: [true, 'Category is required'],
+      required: [false, 'Category is required'],
       trim: true,
       enum: {
         values: [
@@ -50,23 +52,25 @@ const productSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      required: [true, 'Quantity is required'],
+      required: [false, 'Quantity is required'],
       min: [0, 'Quantity cannot be negative'],
       default: 0,
     },
     minStockLevel: {
       type: Number,
       default: 10,
+       required: false,
       min: [0, 'Minimum stock level cannot be negative'],
     },
     unit: {
       type: String,
       default: 'pcs',
+       required: false,
       enum: ['pcs', 'kg', 'liters', 'meters', 'sets', 'pairs', 'rolls'],
     },
     expiryDate: {
       type: Date,
-      required: [true, 'Expiry date is required'],
+      required: false,
       index: true,
     },
     // models/Product.js ke schema ke andar yeh add karein:
@@ -76,26 +80,30 @@ required: false // Chunke har product ka overhaul nahi hota, isay optional rakhe
 },
     manufacturingDate: {
       type: Date,
+      required: false
     },
     batchNumber: {
       type: String,
       trim: true,
+      required: false,
       default: '',
     },
     supplier: {
       name: {
         type: String,
-        required: [true, 'Supplier name is required'],
+        required: [false, 'Supplier name is required'],
         trim: true,
       },
       contact: {
         type: String,
         trim: true,
+         required: false,
         default: '',
       },
       email: {
         type: String,
         trim: true,
+         required: false,
         lowercase: true,
         default: '',
       },
@@ -103,26 +111,31 @@ required: false // Chunke har product ka overhaul nahi hota, isay optional rakhe
     location: {
       type: String,
       trim: true,
+       required: false,
       default: 'Main Warehouse',
     },
     condition: {
       type: String,
       enum: ['New', 'Overhauled', 'Serviceable', 'Unserviceable', 'Repaired'],
       default: 'New',
+       required: false,
     },
     certificationRef: {
       type: String,
       trim: true,
+       required: false,
       default: '',
     },
     lifecycleStatus: {
       type: String,
+       required: false,
       enum: ['Active', 'Quarantined', 'Scrapped', 'Expired'],
       default: 'Active',
     },
     notes: {
       type: String,
       trim: true,
+       required: false,
       default: '',
     },
     isExpired: {
