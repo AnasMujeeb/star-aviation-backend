@@ -55,6 +55,7 @@ const createProduct = async (req, res, next) => {
     // Validate request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log("❌❌ VALIDATION ERRORS:", errors.array());
       return res.status(400).json({
         success: false,
         message: 'Validation failed',
